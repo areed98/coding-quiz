@@ -77,4 +77,17 @@ main div {
     align-self: center;
 }
 
+#container {
+    display: flex;
+    flex-direction: column;
+}
 
+.Correct {
+    color: green;
+    font-style: italic;
+}
+
+.Incorrect {
+    color: red;
+    font-style: italic;
+}
