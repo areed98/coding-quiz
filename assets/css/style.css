@@ -18,7 +18,7 @@ header h1 {
 .hscore {
     font-size: 2vw;
     margin: 40px;
-    color: magenta;
+    color: #a64dff;
 }
 
 body {
@@ -30,22 +30,146 @@ main {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: column;
+    justify-content: center;
+    flex-direction: column;
     text-align: center;
 }
 
 main p {
-
+    margin-top: 10px;
+    font-size: 1vw;
 }
 
 main h2 {
+    font-weight: bold;
+    font-size: 2vw;
+    max-width: 100%;
+}
 
+button {
+    margin: 4px;
+    border: none;
+    background-color: #6600cc;
+    color: white;
+    padding: 20px;
+    font-size: 2vw;
+    border-radius: 20px;
+}
+
+button:hover {
+    background-color: #a64dff;
 }
 
 main #begin {
-
+    display: flex;
+    flex-direction: column;
+    align-content: center;
 }
 
 main div {
+    padding: 15px;
+    display: inline-flex;
+    flex-direction: column;
+    align-self: flex-start;
+}
 
+.start {
+    align-self: center;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+.Correct {
+    color: green;
+    font-style: italic;
+}
+
+.Incorrect {
+    color: red;
+    font-style: italic;
+}
+
+#gameOverScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#gameOverScreenTitle {
+    font-size: 2vw;
+    align-self: left;
+    margin: 10px;
+}
+
+#gameOverScreenSub {
+    font-size: 1.5vw;
+    margin: 10px;
+    font-weight: normal;
+}
+
+form {
+    display: inline-flex;
+    width: 100%;
+}
+
+label {
+    font-size: 1.5vw;
+    margin: 10px;
+}
+
+input {
+    margin: 10px;
+}
+
+#submit {
+    margin: 10px;
+    background-color: #6600cc;
+    color: white;
+    padding: 5px 10px;
+    font-size: 1vw;
+    border-radius: 10px;
+}
+
+#submit:hover {
+    background-color: #a64dff;
+}
+
+#scoreboard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 40vw;
+}
+
+#scoreboardTitle {
+    font-size: 2vw;
+    align-self: left;
+    margin: 10px;
+}
+
+.scores {
+    width: 100%;
+    padding: 4px;
+}
+
+.score {
+    padding: 8px;
+    text-align: left;
+    background-color: #d9b3ff;
+    width: 100%;
+}
+
+.scoreButton {
+    padding: 8px 16px;
+    font-size: 1vw;
+    border-radius: 12px;
+}
+
+.scoreDiv2 {
+    padding: 4px;
+    display: inline-flex;
+    flex-direction: row;
 }
