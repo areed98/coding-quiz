@@ -105,8 +105,9 @@ main div {
 }
 
 #gameOverScreenSub {
-    font-size: 1vw;
+    font-size: 1.5vw;
     margin: 10px;
+    font-weight: normal;
 }
 
 form {
@@ -115,16 +116,12 @@ form {
 }
 
 label {
-    font-size: 1vw;
+    font-size: 1.5vw;
     margin: 10px;
 }
 
 input {
     margin: 10px;
-}
-
-#initials {
-    min-width: 40%;
 }
 
 #submit {

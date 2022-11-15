@@ -2,9 +2,9 @@
 var startQuizEl = document.querySelector("#quizStart");
 var mainEl = document.getElementById("content");
 var flexEl = document.getElementById("flexcontainer");
-var time = document.getElementById("#time");
-var pEl = document.getElementById("p");
-var countdown = 60;
+var time = document.querySelector("#time");
+var pEl = document.createElement("p");
+var counter = 60;
 var buttonID = 0;
 var questionID = 0;
 var highscoreEl = document.querySelector(".hscore");
@@ -109,13 +109,13 @@ var questionArray = [
 var timerInterval = {};
 
 // Function to set up and initialize the quiz
-var startQuiz = function () {
+var startQuiz = function() {
     // Clears the current elements to create space for questions
     var container = document.querySelector("#begin");
     container.remove();
 
     // Resets initial information
-    countdown = 60;
+    counter = 60;
     buttonID = 0;
     questionID = 0;
 
@@ -123,7 +123,7 @@ var startQuiz = function () {
     timerInterval.interval = setInterval(timer, 1000);
 
     // Set text content for time
-    time.textContent = "Time: 60";
+    time.textContent = ("Time: 60");
 
     // Initialize future questionConstructor function to ask questions
     questionConstructor(questionArray[questionID]);
@@ -176,7 +176,7 @@ var questionConstructor = function(question) {
         var buttonEl = document.createElement("button");
 
         // Sets text content
-        buttonEl.textContent = question["Answer" + i];
+        buttonEl.textContent = question["answer" + i];
 
         // ID changed
         buttonEl.setAttribute("id", buttonID);
@@ -201,6 +201,9 @@ var questionConstructor = function(question) {
     // Reset button ID to 0
     buttonID = 0;
 
+    var container = document.querySelector("#container");
+    container.addEventListener("click", finalQuestion);
+
 
 };
 
@@ -210,7 +213,7 @@ var finalQuestion = function(event) {
     // Created after the questionChecker, this is to make sure there are no errors
     // and that the quiz will stop after the final question.
     var correctAns = questionArray[questionID].correctAns;
-    match = event.match;
+    target = event.target;
 
     // Set the finalquestionID to the questions array length minus 1 so that we execute logic on the final question,
     // rather than AFTER the final question.
@@ -220,11 +223,11 @@ var finalQuestion = function(event) {
 
         clearInterval(timerInterval.interval);
 
-        if (match.classList.contains("answer")) {
+        if (target.classList.contains("answer")) {
 
             var correctAnswer = document.getElementById(correctAns);
 
-            if (match === correctAnswer) {
+            if (target === correctAnswer) {
 
                 gameOver();
             } else {
@@ -239,6 +242,9 @@ var finalQuestion = function(event) {
                 }
             }
         }
+    } else {
+        questionChecker(target);
+        return;
     }
 
 
@@ -246,7 +252,7 @@ var finalQuestion = function(event) {
 
 
 // Create logic for if the correct answer is chosen.
-var questionChecker = function(match) {
+var questionChecker = function(target) {
 
     // Pull correctAns from array
     var correctAns = questionArray[questionID].correctAns;
@@ -269,13 +275,13 @@ var questionChecker = function(match) {
     mainEl.appendChild(pEl);
 
     // Check to see if we clicked answer
-    if (match.classList.contains("answer")) {
+    if (target.classList.contains("answer")) {
 
-        // Match up the ID to correctAns
+        // target up the ID to correctAns
         var correctAnswer = document.getElementById(correctAns);
 
         // Checks for a correct button press
-        if (match === correctAnswer) {
+        if (target === correctAnswer) {
 
             // Increments
             questionID++
@@ -330,6 +336,13 @@ var questionChecker = function(match) {
 // Logic to send user to end screen
 var gameOver = function() {
 
+    if (document.getElementById("container")) {
+
+        var container = document.getElementById("container");
+
+        container.remove();
+    }
+
     // Element generation
     var sectionEl = document.createElement("section");
     var h2El = document.createElement("h2");
@@ -343,8 +356,8 @@ var gameOver = function() {
     sectionEl.setAttribute("id", "gameOverScreen");
     h2El.setAttribute("id", "gameOverScreenTitle");
     h3El.setAttribute("id", "gameOverScreenSub");
-    labelEl.setAttribute("for", "intitials");
-    inputEl.setAttribute("id", "intials");
+    labelEl.setAttribute("for", "initials");
+    inputEl.setAttribute("id", "initials");
     submitEl.setAttribute("type", "submit");
     submitEl.setAttribute("value", "submit");
     submitEl.setAttribute("id", "submit");
@@ -368,7 +381,9 @@ var gameOver = function() {
     pEl.remove();
 
     // Submit button listener
-    formEl.addEventListener("Submit", function(event) {
+    formEl.addEventListener("submit", function(event) {
+
+        event.preventDefault();
 
         var input = document.getElementById("initials").value
 
@@ -381,7 +396,7 @@ var gameOver = function() {
 
         // If user inputs proper initials, push values into an object and then into a score array
         } else {
-            var score = counter;
+            var score = counter
 
             var userValues = {
                 userName: input,
@@ -443,7 +458,7 @@ var highScorePage = function() {
         var scoreEl = document.createElement("p");
 
         // Set text
-        scoreEl.textContent = (i + 1) + "." + scores[i].userName + " - " + scores[i].userScore;
+        scoreEl.textContent = (i + 1) + ". " + scores[i].userName + " - " + scores[i].userScore;
 
         // give class of score
         scoreEl.setAttribute("class", "score");
@@ -467,7 +482,7 @@ var highScorePage = function() {
     button2.textContent = "Clear High Scores";
 
     // Append
-    divEl1.appendChild(button1);
+    divEl2.appendChild(button1);
     divEl2.appendChild(button2);
     sectionEl.appendChild(h2El);
     sectionEl.appendChild(divEl1);
@@ -477,6 +492,63 @@ var highScorePage = function() {
     // Add event listeners for buttons
     button1.addEventListener("click", homePage);
     button2.addEventListener("click", clearScores);
+
+};
+
+// return to homepage function
+var homePage = function() {
+
+    //generates high score link
+    if (document.querySelector(".hscore")) {
+        var viewHS = document.querySelector(".hscore");
+        viewHS.textContent = "View High Scores";
+        viewHS.removeEventListener("click", homePage);
+        viewHS.addEventListener("click", highScorePage);
+    }
+
+    // generate proper time
+    var time = document.getElementById("time");
+    time.textContent = "Time: N/A";
+
+    var highscoreEl = document.getElementById("scoreboard");
+    highscoreEl.remove();
+
+    // element creation
+    var sectionEl = document.createElement("section");
+    var h2El = document.createElement("h2");
+    var pEl1 = document.createElement("p");
+    var pEl2 = document.createElement("p");
+    var pEl3 = document.createElement("p");
+    var divEl1 = document.createElement("div");
+    var divEl2 = document.createElement("div");
+    var buttonEl = document.createElement("button");
+
+    // attribute set
+    sectionEl.setAttribute("id", "begin");
+    divEl1.setAttribute("class", "start");
+    divEl2.setAttribute("class", "start");
+    buttonEl.setAttribute("id", "quizStart");
+
+    // set text content
+    h2El.textContent = "Coding Quiz Challenge!";
+    pEl1.textContent = "Try to answer as many questions within the time limit.";
+    pEl2.textContent = "Keep in mind that incorrect answers will penalize your score/time";
+    pEl3.textContent = "by ten seconds!";
+    buttonEl.textContent = "Start Quiz";
+
+    // append
+    divEl1.appendChild(pEl1);
+    divEl1.appendChild(pEl2);
+    divEl1.appendChild(pEl3);
+    divEl2.appendChild(buttonEl);
+    sectionEl.appendChild(h2El);
+    sectionEl.appendChild(divEl1);
+    sectionEl.appendChild(divEl2);
+
+    // adds event listener back to button.
+    buttonEl.addEventListener("click", startQuiz);
+
+    flexEl.appendChild(sectionEl);
 
 };
 
@@ -535,3 +607,5 @@ var clearScores = function() {
 //load scores from local storage
 loadScores();
 
+startQuizEl.addEventListener("click", startQuiz);
+highscoreEl.addEventListener("click", highScorePage);
