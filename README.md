@@ -24,6 +24,8 @@
   ## [Usage](#table-of-contents)
 
   To use this application, you will open your cloned repo, and then change any questions you will want to change within the script.js file, and then push the file to your github, and you then can access the project through your web browser.
+  
+  If you wish to just access this coding quiz without changing anything, you may use the following link: https://areed98.github.io/coding-quiz
 
 ---
   ## [License](#table-of-contents)
